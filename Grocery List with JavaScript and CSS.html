@@ -1,0 +1,116 @@
+
+<!-- Evan Wallace -->
+<!-- JavaScript 1 Quarter Project -->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title> JavaScript Grocery List</title>
+
+        <h1> Grocery List </h1>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                background-color: darkgreen; /* Set background color */
+            }
+            h1 {
+                color: black;
+                text-align: center;
+            }
+            p {
+                text-align: center;
+            }
+            input[type="text"],
+            input[type="number"],
+            button {
+                display: block;
+                margin: 10px auto;
+                padding: 8px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+            button {
+                background-color: navy;
+                color: white;
+                cursor: pointer;
+            }
+            button:hover {
+                background-color: #45a049;
+            }
+            pre {
+                margin: 20px auto;
+                padding: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                width: 50%;
+                white-space: pre-wrap;
+            }
+        </style>
+    </head>
+    <body>
+
+        <p> Please submit your list of groceries and thier corresponding prices one by one. When you are finished click DONE.</p>
+
+        <input type="text" id="groceryinput" placeholder= "Item">
+        <input type="number" id="priceinput" placeholder="Price">
+        <button onclick="addFood()">Add Item</button>
+        <button onclick="LetsGo()">DONE</button>
+        <pre id="checktheList"></pre>
+
+        <script>
+
+            //empty arrays for storing groceries and prices
+
+            var groceryItems = [];
+            var itemPrices = [];
+
+            //add item to the list function
+
+            function addFood(){
+                var shopperInput = document.getElementById("groceryinput");
+                var priceInput = document.getElementById("priceinput");
+                var itemName = shopperInput.value.trim();
+                var itemPrice = parseFloat(priceInput.value); //parseFloat to parse the value as a string and return the first number value
+
+                if (itemName !== "" && !isNaN(itemPrice)){
+                    groceryItems.push(itemName);
+                    itemPrices.push(itemPrice);
+                    priceInput.value = "";
+                    shopperInput.value = "";
+                }
+            }
+
+            //function for when the user is done entering items and display sorted result to the webpage
+
+            function LetsGo(){
+                addFood(); //add last item
+
+                var checktheListElement = document.getElementById("checktheList");
+                
+                checktheListElement.innerHTML = ""; //clear previous input
+
+                //output reciept and total price 
+
+                var receipt = "<pre>Receipt:\n"; //   "\n" to preserve a line break within a string
+                var total = 0;
+                
+                
+                for (var i = 0; i < groceryItems.length; i++){
+                    //append each item and its price to the reciept
+                    receipt += groceryItems [i] + " - $" + itemPrices[i].toFixed(2) + "\n";   //toFixed(2) method to preserve the two decimal places when outputting!
+                    //add price to total
+                    total += itemPrices[i];
+                }
+
+                //append the total count of items and total price to the receipt
+                receipt += "Total items: " + groceryItems.length + "\n";
+                receipt += "Total price: $" + total.toFixed(2) + "</pre>";
+
+                //display the receipt and total price
+
+                checktheListElement.innerHTML = receipt;
+            }
+
+        </script>
+    </body>
+</html>
