@@ -1,2 +1,2 @@
 # North-Seattle-Portfolio
-Destination for noteworthy school projects
+Destination for noteworthy school projects and demos.
